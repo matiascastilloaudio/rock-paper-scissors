@@ -25,7 +25,7 @@ function playRound() {
     computerChoice = computerChoice.toLowerCase();
 
     //for debugging
-    console.log(humanChoice + " " + computerChoice);
+    // console.log(humanChoice + " " + computerChoice);
 
     if (humanChoice === null) {
         console.log("Game cancelled.");
@@ -51,8 +51,10 @@ function playRound() {
 }
 
 function playGame() {
-    for (let i = 0; i < 5; i++) {
-        playRound();
+    if ((computerScore + humanScore) < 5) {
+        for (let i = 0; i < 5; i++) {
+            playRound();
+        }
     }
 
     console.log("Final Score - Computer: " + computerScore + " Human: " + humanScore);
