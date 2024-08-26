@@ -21,21 +21,15 @@ function getHumanChoice() {
 function playRound() {
     let humanChoice = getHumanChoice();
     let computerChoice = getComputerChoice();
-
-    if (humanChoice === null) {
-        console.log("Game cancelled.");
-        return humanChoice;
-    }
-
-    if (humanChoice === "") {
-        console.log("Choose Something (rock, paper, scissors):");
-        return humanChoice;
-    }
-
     humanChoice = humanChoice.toLowerCase();
     computerChoice = computerChoice.toLowerCase();
 
-    if (humanChoice === computerChoice) {
+    //for debugging
+    console.log(humanChoice + " " + computerChoice);
+
+    if (humanChoice === null) {
+        console.log("Game cancelled.");
+    } else if (humanChoice === computerChoice) {
         console.log("Tie");
     } else if (
         (humanChoice === "rock" && computerChoice === "paper") ||
@@ -53,7 +47,7 @@ function playRound() {
         console.log("Invalid input. Please choose rock, paper, or scissors.");
     }
 
-    return [humanScore, computerScore];
+    return humanScore && computerScore;
 }
 
 function playGame() {
