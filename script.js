@@ -13,51 +13,38 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    let humanChoice = prompt("Choose: rock, paper, scissors");
-    return humanChoice;
-}
-
-function playRound() {
-    let humanChoice = getHumanChoice();
+function playRound(humanChoice) {
     let computerChoice = getComputerChoice();
-    humanChoice = humanChoice.toLowerCase();
-    computerChoice = computerChoice.toLowerCase();
 
-    //for debugging
-    // console.log(humanChoice + " " + computerChoice);
+    console.log("Human: " + humanChoice + " - Computer: " + computerChoice); // For debugging
 
-    if (humanChoice === null) {
-        console.log("Game cancelled.");
-    } else if (humanChoice === computerChoice) {
-        console.log("Tie");
-    } else if (
-        (humanChoice === "rock" && computerChoice === "paper") ||
-        (humanChoice === "paper" && computerChoice === "scissors") ||
-        (humanChoice === "scissors" && computerChoice === "rock")
-    ) {
-        console.log("Computer Wins - Score: Computer " + ++computerScore + " Human: " + humanScore);
+    if (humanChoice === computerChoice) {
+        display.textContent = `Tie. Score: Human ${humanScore} - Computer ${computerScore}`;
     } else if (
         (humanChoice === "rock" && computerChoice === "scissors") ||
         (humanChoice === "paper" && computerChoice === "rock") ||
         (humanChoice === "scissors" && computerChoice === "paper")
     ) {
-        console.log("Human Wins - Score: Computer " + computerScore + " Human: " + ++humanScore);
+        humanScore++;
+        display.textContent = `Human Wins. ${humanChoice} beats ${computerChoice}. Score: Human ${humanScore} - Computer ${computerScore}`;
     } else {
-        console.log("Invalid input. Please choose rock, paper, or scissors.");
+        computerScore++;
+        display.textContent = `Computer Wins ${computerChoice} beats ${humanChoice}. Score: Human ${humanScore} - Computer ${computerScore}`;
     }
 
-    return humanScore && computerScore;
-}
-
-function playGame() {
-    if ((computerScore + humanScore) < 5) {
-        for (let i = 0; i < 5; i++) {
-            playRound();
-        }
+    if (humanScore + computerScore === 5) {
+        display.textContent += ` Final Score: Human ${humanScore} - Computer ${computerScore}`;
+        humanScore = 0;
+        computerScore = 0;
     }
-
-    console.log("Final Score - Computer: " + computerScore + " Human: " + humanScore);
 }
 
-playGame();
+const buttons = document.querySelectorAll("button");
+const display = document.querySelector("div");
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        let humanChoice = button.id;
+        playRound(humanChoice);
+    });
+});
